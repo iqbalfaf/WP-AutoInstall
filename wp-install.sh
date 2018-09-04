@@ -70,15 +70,14 @@ chmod -R 755 /var/lib/mysql/
 apt-get install -y nginx php7.0 php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 curl https://raw.githubusercontent.com/iqbalfaf/WP-AutoInstall/nginx.conf > /etc/nginx/nginx.conf
-curl https://raw.githubusercontent.com/iqbalfaf/WP-AutoInstall/vps.conf > /etc/nginx/conf.d/vps.conf
+curl https://raw.githubusercontent.com/iqbalfaf/WP-AutoInstall/wordpress.conf > /etc/nginx/conf.d/wordpress.conf
 sed -i 's/cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php5/fpm/php.ini
 sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
 
 useradd -m vps
 mkdir -p /home/vps/public_html
-echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 service php7.0-fpm restart
